@@ -40,7 +40,6 @@ export default defineConfig({
     },
     lib: {
       entry: resolve(__dirname, 'packages/index.ts'),
-      formats: ['es', 'cjs']
     }
   },
   plugins: [
@@ -48,7 +47,7 @@ export default defineConfig({
     VueDevTools(),
     dtsPlugin({
       outDir: ['dist/es', 'dist/lib'],
-      include: ['packages/**/*.ts']
+      tsconfigPath: resolve(__dirname, "tsconfig.app.json"),
     })
   ],
   resolve: {
