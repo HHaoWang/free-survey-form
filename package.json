@@ -1,7 +1,41 @@
 {
   "name": "free-survey-form",
   "version": "0.0.0",
+  "description": "An implementation of survey form basing free-survey-core.",
+  "repository": "https://github.com/HHaoWang/free-survey-form",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "readme-files"
+  ],
   "type": "module",
+  "main": "dist/lib/index.js",
+  "module": "dist/es/index.js",
+  "types": "dist/es/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "default": "./dist/es/index.js",
+        "types": "./dist/es/index.d.ts"
+      },
+      "require": {
+        "default": "./dist/lib/index.js",
+        "types": "./dist/lib/index.d.ts"
+      }
+    },
+    "./style": {
+      "import": "./dist/es/style.css"
+    }
+  },
+  "keywords": [
+    "free-survey-core",
+    "survey",
+    "questionnaire",
+    "问卷"
+  ],
+  "author": "HHao",
+  "license": "Apache-2.0",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
@@ -37,6 +71,7 @@
     "prettier": "^3.2.5",
     "typescript": "~5.4.0",
     "vite": "^5.2.8",
+    "vite-plugin-dts": "^3.9.0",
     "vite-plugin-vue-devtools": "^7.0.25",
     "vitest": "^1.4.0",
     "vue-tsc": "^2.0.11"

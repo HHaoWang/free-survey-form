@@ -8,7 +8,8 @@
     "packages/**/*.ts",
     "packages/**/*.vue",
     "node_modules/tdesign-vue-next/global.d.ts",
-    "@types/*.ts"
+    "@types/*.ts",
+    "shims-vue.d.ts"
   ],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
