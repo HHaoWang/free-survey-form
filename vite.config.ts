@@ -39,15 +39,16 @@ export default defineConfig({
       ]
     },
     lib: {
-      entry: resolve(__dirname, 'packages/index.ts'),
+      entry: resolve(__dirname, 'packages/index.ts')
     }
   },
   plugins: [
     vue(),
     VueDevTools(),
     dtsPlugin({
+      entryRoot: 'packages',
       outDir: ['dist/es', 'dist/lib'],
-      tsconfigPath: resolve(__dirname, "tsconfig.app.json"),
+      tsconfigPath: resolve(__dirname, 'tsconfig.lib.json')
     })
   ],
   resolve: {

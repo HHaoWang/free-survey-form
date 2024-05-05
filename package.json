@@ -1,6 +1,6 @@
 {
   "name": "free-survey-form",
-  "version": "0.0.0",
+  "version": "0.1.1",
   "description": "An implementation of survey form basing free-survey-core.",
   "repository": "https://github.com/HHaoWang/free-survey-form",
   "files": [
@@ -30,6 +30,8 @@
   },
   "keywords": [
     "free-survey-core",
+    "free-survey-form",
+    "free-survey",
     "survey",
     "questionnaire",
     "问卷"
