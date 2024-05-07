@@ -1,9 +1,10 @@
-import type { Survey } from 'free-survey-core';
+import type { AbstractSurvey } from 'free-survey-core';
 import { computed, ref, type Ref } from 'vue';
 
-export const usePageIndicator = (survey: Ref<Survey>) => {
-  const totalPages: number = survey.value.pages.length;
-  const _currentPage: Ref<number | null> = ref(totalPages > 0 ? 0 : null);
+export const usePageIndicator = (survey: Ref<AbstractSurvey>) => {
+  const _totalPages: Ref<number> = ref(survey.value.pages.length);
+  const totalPages = computed(() => _totalPages.value);
+  const _currentPage: Ref<number | null> = ref(totalPages.value > 0 ? 0 : null);
   const currentPage = computed({
     get(): null | number {
       return _currentPage.value;
@@ -12,7 +13,7 @@ export const usePageIndicator = (survey: Ref<Survey>) => {
       if (_currentPage.value === newVal || newVal === null || !Number.isSafeInteger(newVal)) {
         return;
       }
-      if (newVal < 0 || newVal >= totalPages) return;
+      if (newVal < 0 || newVal >= totalPages.value) return;
       _currentPage.value = newVal;
     }
   });
@@ -26,7 +27,7 @@ export const usePageIndicator = (survey: Ref<Survey>) => {
     if (currentPage.value === null) {
       return false;
     }
-    return currentPage.value < totalPages - 1;
+    return currentPage.value < totalPages.value - 1;
   });
 
   const moveToNextPage = () => {
@@ -41,5 +42,18 @@ export const usePageIndicator = (survey: Ref<Survey>) => {
     }
   };
 
-  return { totalPages, currentPage, hasPrevPage, hasNextPage, moveToNextPage, moveToPrevPage };
+  const refreshPageIndicator = (survey: Ref<AbstractSurvey>) => {
+    _totalPages.value = survey.value.pages.length;
+    _currentPage.value = totalPages.value > 0 ? 0 : null;
+  };
+
+  return {
+    totalPages,
+    currentPage,
+    hasPrevPage,
+    hasNextPage,
+    moveToNextPage,
+    moveToPrevPage,
+    refreshPageIndicator
+  };
 };

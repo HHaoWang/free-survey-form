@@ -1,6 +1,6 @@
 {
   "name": "free-survey-form",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "An implementation of survey form basing free-survey-core.",
   "repository": "https://github.com/HHaoWang/free-survey-form",
   "files": [
@@ -49,7 +49,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "free-survey-core": "^1.2.0",
+    "free-survey-core": "^1.3.2",
     "pinia": "^2.1.7",
     "tdesign-icons-vue-next": "^0.2.2",
     "tdesign-vue-next": "^1.9.4",
@@ -76,6 +76,7 @@
     "vite-plugin-dts": "^3.9.0",
     "vite-plugin-vue-devtools": "^7.0.25",
     "vitest": "^1.4.0",
+    "vue-json-viewer": "^3.0.4",
     "vue-tsc": "^2.0.11"
   }
 }

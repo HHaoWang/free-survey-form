@@ -1,14 +1,19 @@
 <template>
-  <div>
-    <div><span v-if="question.isRequired" class="required-star">*</span>{{ question.title }}</div>
+  <t-form-item :name="question.id" label-width="600">
+    <template #label>
+      <div class="question-title">
+        <span v-if="question.isRequired" class="required-star">*</span>{{ question.title }}
+      </div>
+      <div class="description">{{ question.description }}</div>
+    </template>
     <t-input v-model="question.answer" :placeholder="question.placeholder" />
-  </div>
+  </t-form-item>
 </template>
 
 <script lang="ts" setup>
-import { ref, toRefs } from 'vue';
+import { toRefs } from 'vue';
 import type { SingleTextQuestion } from 'free-survey-core';
-import { Input as TInput } from 'tdesign-vue-next';
+import { Input as TInput, FormItem as TFormItem } from 'tdesign-vue-next';
 
 const props = defineProps<{
   question: SingleTextQuestion;
@@ -19,5 +24,14 @@ const { question } = toRefs(props);
 <style lang="less" scoped>
 .required-star {
   color: red;
+}
+.question-title {
+  font-size: var(--font-size-medium);
+}
+.description {
+  word-break: break-all;
+  text-wrap: pretty;
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
 }
 </style>

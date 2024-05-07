@@ -14,3 +14,6 @@ const FreeSurveyFormPlugin: Plugin<[]> = {
 };
 
 export default FreeSurveyFormPlugin;
+export { FreeSurveyForm };
+
+export type { ChangeEvent } from './src/types/Common';

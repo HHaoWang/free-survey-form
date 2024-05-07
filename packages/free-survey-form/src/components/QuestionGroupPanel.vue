@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, toRefs } from 'vue';
+import { toRefs } from 'vue';
 import { AbstractQuestion, AbstractQuestionGroup } from 'free-survey-core';
 import { ElementProvider } from '../ElementProvider';
 const props = defineProps<{
@@ -32,10 +32,11 @@ const { questionGroup } = toRefs(props);
   outline: dashed 1px #d6d6d6;
   padding: var(--space);
   border-radius: var(--border-radius);
+  padding-bottom: calc(var(--space) + var(--td-line-height-body-small));
 
   .header {
     cursor: default;
-    margin-bottom: var(--space-2);
+    margin-bottom: var(--space);
 
     .title {
       font-size: var(--font-size-small);

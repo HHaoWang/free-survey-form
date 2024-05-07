@@ -5,11 +5,13 @@
       <div class="description">{{ survey.description }}</div>
     </div>
     <div class="content">
-      <page-panel :page="currentPageObj" v-if="currentPageObj !== null" />
-      <div v-if="currentPageObj === null">当前页没有内容需要填写！</div>
+      <t-form v-if="currentPageObj" label-align="top" ref="pageForm">
+        <page-panel :page="currentPageObj" />
+      </t-form>
+      <div v-if="!currentPageObj">当前页没有内容需要填写！</div>
     </div>
     <div class="footer">
-      <div class="page-indicator">{{ (currentPage ?? 0) + 1 }} / {{ totalPages }}</div>
+      <div class="page-indicator">{{ (currentPage ?? -1) + 1 }} / {{ totalPages }}</div>
       <div class="page-navigator">
         <t-button
           class="prev-btn"
@@ -17,7 +19,7 @@
           size="large"
           :disabled="!hasPrevPage"
           v-show="hasPrevPage"
-          @click="moveToPrevPage"
+          @click="onMoveToPrevPage"
         >
           <template #icon>
             <ChevronLeftIcon />
@@ -27,15 +29,21 @@
           class="next-btn"
           :disabled="!hasNextPage"
           size="large"
-          @click="moveToNextPage"
-          v-show="!hasPrevPage"
+          @click="onMoveToNextPage"
+          v-show="hasNextPage"
         >
           <div class="btn-content">
             <span>下一页</span>
             <ChevronRightIcon />
           </div>
         </t-button>
-        <t-button class="next-btn" :disabled="hasNextPage" size="large" v-show="hasPrevPage">
+        <t-button
+          class="next-btn"
+          :disabled="hasNextPage"
+          size="large"
+          v-show="!hasNextPage"
+          @click="onSubmit"
+        >
           <div class="btn-content">提交</div>
         </t-button>
       </div>
@@ -45,28 +53,102 @@
 
 <script lang="ts" setup>
 import { computed, ref, toRefs } from 'vue';
-import { Survey } from 'free-survey-core';
+import { AbstractSurvey, type ValidationError } from 'free-survey-core';
 import { usePageIndicator } from './scripts/page-indicator';
-import { Button as TButton } from 'tdesign-vue-next';
+import {
+  Button as TButton,
+  Form as TForm,
+  type FormInstanceFunctions,
+  MessagePlugin
+} from 'tdesign-vue-next';
 import { ChevronLeftIcon, ChevronRightIcon } from 'tdesign-icons-vue-next';
 import PagePanel from './components/PagePanel.vue';
-const props = withDefaults(
-  defineProps<{
-    survey?: Survey;
-  }>(),
-  {
-    survey: () => new Survey()
-  }
-);
-const emits = defineEmits(['update:survey']);
+import type { ChangeEvent } from './types/Common';
+
+const props = defineProps<{
+  survey: AbstractSurvey;
+}>();
 const { survey } = toRefs(props);
-const { totalPages, currentPage, hasPrevPage, hasNextPage, moveToPrevPage, moveToNextPage } =
-  usePageIndicator(survey);
+const emits = defineEmits<{
+  (e: 'onPageChange', changeEvent: ChangeEvent): void;
+  (e: 'onSubmit'): void;
+}>();
+const pageForm = ref<FormInstanceFunctions>();
+const {
+  totalPages,
+  currentPage,
+  hasPrevPage,
+  hasNextPage,
+  moveToPrevPage,
+  moveToNextPage,
+  refreshPageIndicator
+} = usePageIndicator(survey);
+
+const checkCurrentPageAnswerIsValid = async () => {
+  const result = await currentPageObj.value?.answerIsValid();
+  if (result === true) {
+    return true;
+  }
+  const messages: { [key: string]: any } = {};
+  for (const validationError of result as ValidationError[]) {
+    if (!messages[validationError.elementId]) {
+      messages[validationError.elementId] = [];
+    }
+    messages[validationError.elementId].push({
+      type: 'error',
+      message: validationError.msg
+    });
+  }
+  pageForm.value?.setValidateMessage(messages);
+  return false;
+};
+const onMoveToNextPage = async () => {
+  if (await checkCurrentPageAnswerIsValid()) {
+    const changeEvent: ChangeEvent = {
+      prevPage: currentPage.value,
+      currentPage: null
+    };
+    moveToNextPage();
+    changeEvent.currentPage = currentPage.value;
+    emits('onPageChange', changeEvent);
+  }
+};
+const onMoveToPrevPage = async () => {
+  if (await checkCurrentPageAnswerIsValid()) {
+    const changeEvent: ChangeEvent = {
+      prevPage: currentPage.value,
+      currentPage: null
+    };
+    moveToPrevPage();
+    changeEvent.currentPage = currentPage.value;
+    emits('onPageChange', changeEvent);
+  }
+};
+const onSubmit = async () => {
+  let result: boolean | ValidationError[] = await checkCurrentPageAnswerIsValid();
+  if (!result) {
+    return;
+  }
+  result = await survey.value.answerIsValid();
+  if (result !== true) {
+    await MessagePlugin.error('问卷填写有误！请检查您的答案！');
+  }
+  emits('onSubmit');
+};
+
 const currentPageObj = computed(() => {
   if (currentPage.value === null) {
     return null;
   }
   return survey.value.pages[currentPage.value];
+});
+
+const refresh = () => {
+  refreshPageIndicator(survey);
+};
+
+defineExpose({
+  refresh
 });
 </script>
 
@@ -90,6 +172,12 @@ const currentPageObj = computed(() => {
   --font-size-larger: 28px;
   --font-color-secondnary: var(--td-text-color-secondary);
   --theme-primary-color: var(--td-brand-color);
+  --line-height-medium: 24px;
+  --line-height: var(--line-height-medium);
+  --line-height-small: 20px;
+  --line-height-smaller: 16px;
+  --line-height-large: 28px;
+  --line-height-larger: 32px;
 
   font-family: var(--font-family);
   line-height: 1.5;
@@ -99,6 +187,7 @@ const currentPageObj = computed(() => {
   padding: var(--space-2);
   border-radius: var(--border-radius);
   min-width: 600px;
+  max-width: 600px;
 
   .header {
     cursor: default;

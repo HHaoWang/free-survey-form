@@ -14,6 +14,10 @@ npm install free-survey-form
 
 ## 用法
 
+你可选择全局引入使用或局部引入使用。全局引入后即可在任意模板中使用`free-survey-form`组件。
+
+### 全局引入
+
 main.ts ：
 
 ```typescript
@@ -28,20 +32,29 @@ app.use(FreeSurveyFormPlugin);
 app.mount('#app');
 ```
 
+### 局部引入
+
 App.vue ：
 
 ```vue
 <template>
   <div class="panel">
-    <free-survey-form class="form" v-model:survey="surveyModel" />
+    <free-survey-form class="form" :survey="surveyModel" ref="form" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { Survey } from 'free-survey-core';
+import { FreeSurveyForm } from 'free-survey-form';
 import { ref } from 'vue';
 
 const surveyModel = ref(new Survey());
+const form = ref<InstanceType<typeof FreeSurveyForm>>();
+const importJson = () => {
+  const json = getSurveyJsonFromSomewhere();
+  surveyModel.value.importFromJson(json);
+  form.value?.refresh();
+};
 </script>
 
 <style scoped>
