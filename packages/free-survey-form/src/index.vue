@@ -64,6 +64,7 @@ import {
 import { ChevronLeftIcon, ChevronRightIcon } from 'tdesign-icons-vue-next';
 import PagePanel from './components/PagePanel.vue';
 import type { ChangeEvent } from './types/Common';
+import { registerDefaultQuestion } from './scripts/registerDefaultQuestion';
 
 const props = defineProps<{
   survey: AbstractSurvey;
@@ -150,6 +151,8 @@ const refresh = () => {
 defineExpose({
   refresh
 });
+
+registerDefaultQuestion();
 </script>
 
 <style lang="less" scoped>

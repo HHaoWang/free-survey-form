@@ -49,7 +49,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "free-survey-core": "^1.3.2",
+    "free-survey-core": "^1.3.5",
     "pinia": "^2.1.7",
     "tdesign-icons-vue-next": "^0.2.2",
     "tdesign-vue-next": "^1.9.4",
