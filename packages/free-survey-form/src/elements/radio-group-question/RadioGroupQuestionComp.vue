@@ -60,6 +60,14 @@ const onClickOtherInput: InputProps['onClick'] = (event) => {
 const onOtherValueChanged: InputProps['onChange'] = (value) => {
   question.value.answer = 'other:' + value + '';
 };
+if (question.value.answer) {
+  if (question.value.answer.startsWith('other:')) {
+    selectedItem.value = 'other';
+    otherValue.value = question.value.answer.slice(6);
+  } else {
+    selectedItem.value = question.value.answer;
+  }
+}
 </script>
 
 <style lang="less" scoped>
