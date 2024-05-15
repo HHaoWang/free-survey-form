@@ -2,7 +2,14 @@
   <t-form-item :name="question.id" label-width="600">
     <template #label>
       <div class="question-title">
-        <span v-if="question.isRequired" class="required-star">*</span>{{ question.title }}
+        <span
+          :style="{
+            visibility: question.isRequired ? 'visible' : 'hidden'
+          }"
+          class="required-star"
+          >*</span
+        >{{ Number.isInteger(props.index) ? props.index! + 1 : '' }}.
+        {{ question.title }}
       </div>
       <div class="description">{{ question.description }}</div>
     </template>
@@ -16,6 +23,7 @@ import type { AbstractQuestion } from 'free-survey-core';
 import { FormItem as TFormItem } from 'tdesign-vue-next';
 const props = defineProps<{
   question: AbstractQuestion;
+  index?: number;
 }>();
 const { question } = toRefs(props);
 </script>

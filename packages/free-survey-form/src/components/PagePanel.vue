@@ -1,14 +1,16 @@
 <template>
-  <template v-for="item in page.elements" :key="item.id">
+  <template v-for="(item, index) in page.elements" :key="item.id">
     <component
       v-if="item.type === 'question'"
       :is="ElementProvider.provide((item as AbstractQuestion).questionType)"
       :question="item"
+      :index="index"
       class="page-element"
     />
     <QuestionGroupPanel
       v-if="item.type === 'questionGroup'"
       :questionGroup="item as AbstractQuestionGroup"
+      :index="index"
       class="page-element"
     />
   </template>

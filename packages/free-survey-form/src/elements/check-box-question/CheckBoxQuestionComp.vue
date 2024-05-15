@@ -17,9 +17,7 @@ import { ref, toRefs } from 'vue';
 import {
   Checkbox as TCheckbox,
   CheckboxGroup as TCheckboxGroup,
-  type CheckboxProps,
-  type CheckboxGroupProps,
-  Button as TButton
+  type CheckboxGroupProps
 } from 'tdesign-vue-next';
 import { CheckBoxQuestion } from 'free-survey-core';
 import BasicQuestionElement from '../../components/BasicQuestionElement.vue';

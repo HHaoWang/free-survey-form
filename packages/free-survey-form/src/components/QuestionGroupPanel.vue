@@ -1,14 +1,17 @@
 <template>
   <div class="question-group-panel">
     <div class="header">
-      <div class="title">{{ questionGroup.title }}</div>
+      <div class="title">
+        {{ Number.isInteger(props.index) ? props.index! + 1 : '' }}. {{ questionGroup.title }}
+      </div>
       <div class="description">{{ questionGroup.description }}</div>
     </div>
     <component
-      v-for="item in questionGroup.questions"
+      v-for="(item, index) in questionGroup.questions"
       :key="item.id"
       :is="ElementProvider.provide((item as AbstractQuestion).questionType)"
       :question="item"
+      :index="index"
     />
     <div v-if="questionGroup.questions.length === 0" class="empty-tip">
       本题组中没有需要填写的问题！
@@ -22,6 +25,7 @@ import { AbstractQuestion, AbstractQuestionGroup } from 'free-survey-core';
 import { ElementProvider } from '../ElementProvider';
 const props = defineProps<{
   questionGroup: AbstractQuestionGroup;
+  index?: number;
 }>();
 const { questionGroup } = toRefs(props);
 </script>
@@ -39,7 +43,7 @@ const { questionGroup } = toRefs(props);
     margin-bottom: var(--space);
 
     .title {
-      font-size: var(--font-size-small);
+      font-size: var(--font-size-medium);
     }
     .description {
       font-size: var(--font-size-smaller);
