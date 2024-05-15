@@ -76,12 +76,12 @@ const importJson = () => {
 | :------------------: | :------: | :------: |
 |      页面(Page)      |    ✅    |          |
 | 题组(QuestionGroup)  |    ✅    |          |
-| 单项选择(RadioGroup) |    ❌    |    ✅    |
-|  多项选择(CheckBox)  |    ❌    |    ✅    |
+| 单项选择(RadioGroup) |    ✅    |          |
+|  多项选择(CheckBox)  |    ✅    |          |
 | 文本问答(SingleText) |    ✅    |          |
-|  下拉选择(Dropdown)  |    ❌    |    ✅    |
+|  下拉选择(Dropdown)  |    ✅    |          |
 |    时间选择(Time)    |    ❌    |    ✅    |
-|   分割线(Splitter)   |    ❌    |    ✅    |
+|   分割线(Splitter)   |    ✅    |          |
 |      文件(File)      |    ❌    |    ✅    |
 
 ## 参与开发
