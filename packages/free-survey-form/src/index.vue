@@ -181,16 +181,20 @@ registerDefaultQuestion();
   --line-height-smaller: 16px;
   --line-height-large: 28px;
   --line-height-larger: 32px;
+  --padding-top: var(--space-2);
+  --padding-bottom: var(--space-2);
+  --padding-left: var(--space-3);
+  --padding-right: var(--space-3);
 
   font-family: var(--font-family);
   line-height: 1.5;
   color: #484848;
   letter-spacing: 0;
   background-color: var(--background-color);
-  padding: var(--space-2);
+  padding: var(--padding-top) var(--padding-right) var(--padding-bottom) var(--padding-left);
   border-radius: var(--border-radius);
-  min-width: 600px;
-  max-width: 600px;
+  width: 600px;
+  max-width: 100%;
 
   .header {
     cursor: default;
@@ -222,6 +226,7 @@ registerDefaultQuestion();
       display: flex;
       justify-content: space-between;
       width: 300px;
+      max-width: 100%;
       margin: auto;
       gap: var(--space-2);
 

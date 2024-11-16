@@ -34,9 +34,8 @@ const { questionGroup } = toRefs(props);
 .question-group-panel {
   min-height: 64px;
   outline: dashed 1px #d6d6d6;
-  padding: var(--space);
   border-radius: var(--border-radius);
-  padding-bottom: calc(var(--space) + var(--td-line-height-body-small));
+  padding: var(--space-2) var(--space-2) calc(var(--space) + var(--td-line-height-body-small)) var(--space-2);
 
   .header {
     cursor: default;

@@ -1,6 +1,6 @@
 {
   "name": "free-survey-form",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "An implementation of survey form basing free-survey-core.",
   "repository": "https://github.com/HHaoWang/free-survey-form",
   "files": [
@@ -72,7 +72,7 @@
     "npm-run-all2": "^6.1.2",
     "prettier": "^3.2.5",
     "typescript": "~5.4.0",
-    "vite": "^5.2.8",
+    "vite": "^5.4.11",
     "vite-plugin-dts": "^3.9.0",
     "vite-plugin-vue-devtools": "^7.0.25",
     "vitest": "^1.4.0",

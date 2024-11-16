@@ -1,6 +1,11 @@
 <template>
   <basic-question-element :question="question">
-    <t-select @change="onValueChanged" v-model="selectedItem" placeholder="请选择">
+    <t-select
+      @change="onValueChanged"
+      v-model="selectedItem"
+      placeholder="请选择"
+      class="dropdown-question"
+    >
       <t-option
         v-for="option in question.choices"
         :key="option.key"
@@ -48,6 +53,10 @@ const clearAnswer = () => {
 </script>
 
 <style lang="less" scoped>
+.dropdown-question{
+  width: 260px;
+  max-width: 100%;
+}
 .other {
   display: flex;
   align-items: center;
